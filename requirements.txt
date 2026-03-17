@@ -1,2 +1,6 @@
 pygame==2.5.2
 streamlit==1.39.0
+subprocess
+json
+sys
+os
