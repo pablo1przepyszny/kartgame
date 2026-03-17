@@ -2,6 +2,8 @@ import math
 import random
 import sys
 import pygame
+import json
+import sys
 
 # -----------------------------
 # Simple configuration structs
@@ -414,6 +416,45 @@ def ask_color(prompt, default):
         return (r, g, b)
     except Exception:
         return default
+
+def main():
+    # If launched with config file
+    if len(sys.argv) > 1:
+        cfg_path = sys.argv[1]
+        with open(cfg_path, "r") as f:
+            data = json.load(f)
+
+        p1 = PlayerConfig(
+            name="Player 1",
+            left_key=pygame.K_LEFT,
+            right_key=pygame.K_RIGHT,
+            accel_key=pygame.K_RCTRL,
+            brake_key=pygame.K_RSHIFT,
+            color=tuple(data["player1_color"]),
+        )
+
+        p2 = None
+        if data["player2_enabled"]:
+            p2 = PlayerConfig(
+                name="Player 2",
+                left_key=pygame.K_a,
+                right_key=pygame.K_d,
+                accel_key=pygame.K_w,
+                brake_key=pygame.K_s,
+                color=tuple(data["player2_color"]),
+            )
+
+        config = GameConfig(
+            width=data["width"],
+            height=data["height"],
+            laps=data["laps"],
+            difficulty=data["difficulty"],
+            player1=p1,
+            player2=p2,
+        )
+
+        run_game(config)
+        return
 
 
 def main():
