@@ -3,6 +3,8 @@ import subprocess
 import json
 import sys
 import os
+python game.py game_config.json
+
 
 st.set_page_config(page_title="Hungaroring Kart Launcher", layout="centered")
 
